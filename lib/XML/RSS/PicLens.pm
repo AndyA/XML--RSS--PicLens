@@ -12,11 +12,11 @@ XML::RSS::PicLens - Create a PicLens compatible RSS feed
 
 =head1 VERSION
 
-This document describes XML::RSS::PicLens version 0.03
+This document describes XML::RSS::PicLens version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 SYNOPSIS
 
