@@ -1,6 +1,7 @@
 --- #YAML:1.0
 name:                XML-RSS-PicLens
-version:             0.04
+version:             0.05
+
 
 
 abstract:            Create a PicLens compatible RSS feed
