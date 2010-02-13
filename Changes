@@ -1,0 +1,7 @@
+Revision history for XML-RSS-PicLens
+
+0.01    2008-06-26
+        - Initial release.
+
+0.02	2008-06-28
+		- Removed bundled Data::Section; it's now a dependency.
