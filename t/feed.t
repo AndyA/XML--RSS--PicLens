@@ -9,62 +9,62 @@ use Data::Section -setup;
 use XML::RSS::PicLens;
 
 my @SCHEDULE = (
-    {
-        name => 'empty',
-        like => 'empty',
-        make => sub { },
+  {
+    name => 'empty',
+    like => 'empty',
+    make => sub { },
+  },
+  {
+    name => 'full',
+    like => 'full',
+    make => sub {
+      my $pl = shift;
+      $pl->add_image(
+        image     => 'pl_images/A.jpg',
+        thumbnail => 'pl_thumbs/A.jpg',
+      );
+      $pl->add_image( image     => 'pl_images/B.jpg', );
+      $pl->add_image( thumbnail => 'pl_thumbs/C.jpg', );
+      $pl->add_image(
+        title     => 'Image D',
+        thumbnail => 'pl_thumbs/D.jpg',
+      );
+      $pl->add_image(
+        title => 'Image E',
+        image => 'pl_images/E.jpg',
+      );
+      $pl->add_image(
+        link  => 'http://hexten.net/',
+        image => 'pl_images/F.jpg',
+      );
+      $pl->add_image(
+        image     => 'pl_images/Z.jpg',
+        thumbnail => 'pl_thumbs/Z.jpg',
+      );
     },
-    {
-        name => 'full',
-        like => 'full',
-        make => sub {
-            my $pl = shift;
-            $pl->add_image(
-                image     => 'pl_images/A.jpg',
-                thumbnail => 'pl_thumbs/A.jpg',
-            );
-            $pl->add_image( image     => 'pl_images/B.jpg', );
-            $pl->add_image( thumbnail => 'pl_thumbs/C.jpg', );
-            $pl->add_image(
-                title     => 'Image D',
-                thumbnail => 'pl_thumbs/D.jpg',
-            );
-            $pl->add_image(
-                title => 'Image E',
-                image => 'pl_images/E.jpg',
-            );
-            $pl->add_image(
-                link  => 'http://hexten.net/',
-                image => 'pl_images/F.jpg',
-            );
-            $pl->add_image(
-                image     => 'pl_images/Z.jpg',
-                thumbnail => 'pl_thumbs/Z.jpg',
-            );
-        },
-    },
+  },
 );
 
 plan tests => @SCHEDULE * 4;
 
 for my $case ( @SCHEDULE ) {
-    my $name = $case->{name};
-    my $like = $case->{like};
-    my $make = $case->{make};
+  my $name = $case->{name};
+  my $like = $case->{like};
+  my $make = $case->{make};
 
-    my $ref = __PACKAGE__->section_data( $like );
+  my $ref = __PACKAGE__->section_data( $like );
 
-    ok my $pl = XML::RSS::PicLens->new, "$name: created";
-    isa_ok $pl, 'XML::RSS::PicLens';
+  ok my $pl = XML::RSS::PicLens->new, "$name: created";
+  isa_ok $pl, 'XML::RSS::PicLens';
 
-    $make->( $pl );
+  $make->( $pl );
 
-    my $got = $pl->as_string;
+  my $got = $pl->as_string;
 
-    # diag $got;
+  # diag $got;
 
-    is_well_formed_xml( $got, "$name: XML well formed" );
-    is_xml( $got, $$ref, "$name: XML matches" );
+  is_well_formed_xml( $got, "$name: XML well formed" );
+  is_xml( $got, $$ref, "$name: XML matches" );
 }
 
 # vim:ts=4:sw=4:et:ft=perl

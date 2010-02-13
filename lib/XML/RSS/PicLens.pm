@@ -20,16 +20,16 @@ our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
-    use XML::RSS::PicLens;
+  use XML::RSS::PicLens;
 
-    my $feed = XML::RSS::PicLens->new;
-    $feed->add_image(
-        link      => 'foo.jpg',
-        image     => 'foo.jpg',
-        thumbnail => 'thumbs/foo.jpg',
-        title     => 'An bootiful foo'
-    );
-    print $feed->as_string;
+  my $feed = XML::RSS::PicLens->new;
+  $feed->add_image(
+    link      => 'foo.jpg',
+    image     => 'foo.jpg',
+    thumbnail => 'thumbs/foo.jpg',
+    title     => 'An bootiful foo'
+  );
+  print $feed->as_string;
 
 =head1 DESCRIPTION
 
@@ -51,15 +51,15 @@ superclass's constructor. The RSS version defaults to 2.0.
 =cut
 
 sub new {
-    my $class = shift;
-    my $self = $class->SUPER::new( version => '2.0', @_ );
+  my $class = shift;
+  my $self = $class->SUPER::new( version => '2.0', @_ );
 
-    $self->add_module(
-        prefix => 'media',
-        uri    => 'http://search.yahoo.com/mrss'
-    );
+  $self->add_module(
+    prefix => 'media',
+    uri    => 'http://search.yahoo.com/mrss'
+  );
 
-    return $self;
+  return $self;
 }
 
 =head2 C<< add_image >>
@@ -80,40 +80,40 @@ to values based on C<image> or C<thumbnail>.
 =cut
 
 sub add_image {
-    my $self = shift;
-    croak "add_image must be called as a method"
-      unless ref $self;
-    croak "add_image needs a number of key => value pairs"
-      if @_ % 1;
-    my %args = @_;
+  my $self = shift;
+  croak "add_image must be called as a method"
+   unless ref $self;
+  croak "add_image needs a number of key => value pairs"
+   if @_ % 1;
+  my %args = @_;
 
-    my $image     = delete $args{image};
-    my $thumbnail = delete $args{thumbnail};
+  my $image     = delete $args{image};
+  my $thumbnail = delete $args{thumbnail};
 
-    croak "add_image needs at least one of image, thumbnail"
-      unless defined $image
-          or defined $thumbnail;
+  croak "add_image needs at least one of image, thumbnail"
+   unless defined $image
+     or defined $thumbnail;
 
-    my $default = defined $image ? $image : $thumbnail;
+  my $default = defined $image ? $image : $thumbnail;
 
-    my $link  = delete $args{link};
-    my $title = delete $args{title};
+  my $link  = delete $args{link};
+  my $title = delete $args{title};
 
-    $link = $default unless defined $link;
-    ( $title = $default ) =~ s!.*/!! unless defined $title;
+  $link = $default unless defined $link;
+  ( $title = $default ) =~ s!.*/!! unless defined $title;
 
-    $self->add_item(
-        title => $title,
-        link  => $link,
-        media => {
-            (
-                defined $thumbnail
-                ? ( thumbnail => { url => $thumbnail } )
-                : ()
-            ),
-            ( defined $image ? ( content => { url => $image } ) : () ),
-        },
-    );
+  $self->add_item(
+    title => $title,
+    link  => $link,
+    media => {
+      (
+        defined $thumbnail
+        ? ( thumbnail => { url => $thumbnail } )
+        : ()
+      ),
+      ( defined $image ? ( content => { url => $image } ) : () ),
+    },
+  );
 }
 
 =head2 C<< as_string >>
