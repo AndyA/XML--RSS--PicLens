@@ -41,6 +41,11 @@ my @SCHEDULE = (
         image     => 'pl_images/Z.jpg',
         thumbnail => 'pl_thumbs/Z.jpg',
       );
+      $pl->add_content(
+        content      => 'pl_images/foo.flv',
+        content_type => 'video/x-flv',
+        thumbnail    => 'pl_thumbs/foo.jpg',
+      );
     },
   },
 );
@@ -124,6 +129,12 @@ __[ full ]__
             <link>pl_images/Z.jpg</link>
             <media:thumbnail url="pl_thumbs/Z.jpg"/>
             <media:content url="pl_images/Z.jpg"/>
+        </item>                               
+        <item>
+            <title>foo.flv</title>
+            <link>pl_images/foo.flv</link>
+            <media:thumbnail url="pl_thumbs/foo.jpg"/>
+            <media:content url="pl_images/foo.flv" type="video/x-flv"/>
         </item>                               
     </channel>
 </rss>
